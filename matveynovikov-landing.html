@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Матвей Новиков | Персональная консультация</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --deep: #0f0f0f;
+    --card: #141414;
+    --border: #222222;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-pale: #c9a84c22;
+    --white: #f0ede8;
+    --grey: #888880;
+    --red: #c0392b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, #c9a84c0d 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, #c0392b08 0%, transparent 60%);
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold-pale);
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    padding: 8px 18px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 36px;
+    width: fit-content;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .badge::before { content: '🏆'; font-size: 13px; }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 8vw, 110px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2vw, 24px);
+    font-style: italic;
+    color: var(--grey);
+    line-height: 1.6;
+    max-width: 420px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    padding: 18px 42px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px #c9a84c40;
+  }
+
+  .price-pill {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--grey);
+  }
+
+  .price-pill strong {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--white);
+    display: block;
+  }
+
+  .hero-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 80px 60px 20px;
+  }
+
+  .portrait-wrap {
+    position: relative;
+    width: 360px;
+    height: 480px;
+    animation: fadeIn 1.2s 0.4s ease both;
+  }
+
+  .portrait-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--gold) 100%);
+    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+    z-index: -1;
+  }
+
+  .portrait-inner {
+    position: absolute;
+    inset: 1px;
+    background: var(--card);
+    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .portrait-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #1a1a1a 0%, #0f0f0f 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .portrait-initials {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    color: var(--gold);
+    opacity: 0.15;
+    line-height: 1;
+  }
+
+  .portrait-name-card {
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+    background: linear-gradient(180deg, transparent 0%, var(--black) 100%);
+    padding: 40px 24px 24px;
+    text-align: center;
+  }
+
+  .portrait-name-card .name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+  }
+
+  .portrait-name-card .title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 4px;
+  }
+
+  .stat-float {
+    position: absolute;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 16px 22px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .stat-float:nth-child(2) {
+    top: 40px;
+    right: -40px;
+    animation: fadeLeft 0.8s 0.8s ease both;
+  }
+
+  .stat-float:nth-child(3) {
+    bottom: 80px;
+    left: -50px;
+    animation: fadeRight 0.8s 0.9s ease both;
+  }
+
+  .stat-float .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-float .label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 4px;
+  }
+
+  .hero-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 80px; }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.95;
+    margin-bottom: 24px;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--deep);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    line-height: 1.75;
+    color: #c8c4bc;
+  }
+
+  .about-text strong { color: var(--white); font-weight: 600; }
+
+  .about-awards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .award-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    transition: border-color 0.3s;
+  }
+
+  .award-item:hover { border-color: var(--gold-light); }
+
+  .award-icon { font-size: 28px; flex-shrink: 0; }
+
+  .award-text .t { font-size: 14px; font-weight: 600; color: var(--white); }
+  .award-text .s { font-size: 12px; color: var(--grey); margin-top: 4px; line-height: 1.4; }
+
+  /* ── WHAT YOU GET ── */
+  .offer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 80px;
+  }
+
+  .offer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+  }
+
+  .offer-card {
+    background: var(--card);
+    padding: 40px 36px;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offer-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .offer-card:hover::after { transform: scaleX(1); }
+  .offer-card:hover { background: #1a1a1a; }
+
+  .offer-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--gold);
+    opacity: 0.15;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .offer-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    color: var(--white);
+  }
+
+  .offer-card p {
+    font-size: 14px;
+    color: var(--grey);
+    line-height: 1.7;
+  }
+
+  /* ── WHO IS THIS FOR ── */
+  .who {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .who-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .who-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 48px;
+  }
+
+  .who-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+
+  .who-check {
+    width: 28px;
+    height: 28px;
+    background: var(--gold);
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    font-size: 13px;
+  }
+
+  .who-item p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #c8c4bc;
+    padding-top: 2px;
+  }
+
+  /* ── PROCESS ── */
+  .process {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 80px;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 60px;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-pale), var(--gold));
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  .step-num {
+    width: 64px;
+    height: 64px;
+    background: var(--card);
+    border: 1px solid var(--gold);
+    display: grid;
+    place-items: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+    clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+  }
+
+  .step h4 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+
+  .step p {
+    font-size: 13px;
+    color: var(--grey);
+    line-height: 1.6;
+  }
+
+  /* ── PRICING ── */
+  .pricing-section {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+  }
+
+  .pricing-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .pricing-card {
+    background: var(--card);
+    border: 1px solid var(--gold);
+    padding: 64px 60px;
+    margin-top: 48px;
+    position: relative;
+    clip-path: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
+  }
+
+  .pricing-card::before {
+    content: 'ПЕРСОНАЛЬНАЯ КОНСУЛЬТАЦИЯ';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--black);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 6px 20px;
+    white-space: nowrap;
+  }
+
+  .price-display {
+    margin: 32px 0;
+  }
+
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 96px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .price-currency {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    color: var(--grey);
+    vertical-align: top;
+    margin-top: 16px;
+    display: inline-block;
+  }
+
+  .price-note {
+    font-size: 13px;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .pricing-includes {
+    list-style: none;
+    text-align: left;
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .pricing-includes li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 15px;
+    color: #c8c4bc;
+  }
+
+  .pricing-includes li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+  }
+
+  .btn-gold {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    padding: 20px 60px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+
+  .btn-gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 48px #c9a84c45;
+  }
+
+  .guarantee {
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 80px;
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .testi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 36px;
+    position: relative;
+  }
+
+  .testi-card::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    color: var(--gold);
+    opacity: 0.2;
+    position: absolute;
+    top: 16px;
+    left: 24px;
+    line-height: 1;
+  }
+
+  .testi-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.7;
+    color: #c8c4bc;
+    margin-bottom: 28px;
+    padding-top: 20px;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .testi-avatar {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--gold), #8b6914);
+    display: grid;
+    place-items: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--black);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+
+  .testi-info .name { font-size: 14px; font-weight: 600; color: var(--white); }
+  .testi-info .meta { font-size: 12px; color: var(--grey); margin-top: 2px; }
+
+  /* ── BOOK ── */
+  .book-section {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 100px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .book-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 70% at 80% 50%, #c9a84c08 0%, transparent 70%),
+      radial-gradient(ellipse 30% 50% at 10% 50%, #c9a84c05 0%, transparent 60%);
+  }
+
+  .book-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .book-cover-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .book-cover {
+    width: 280px;
+    height: 380px;
+    background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 1px solid var(--gold);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 28px;
+    text-align: center;
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+    box-shadow: 16px 16px 0px var(--gold-pale), 0 40px 80px #00000080;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .book-cover:hover {
+    transform: rotate(-2deg) translateY(-8px);
+    box-shadow: 20px 20px 0px #c9a84c30, 0 60px 100px #00000090;
+  }
+
+  .book-cover-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 12px;
+    width: 100%;
+  }
+
+  .book-cover-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    line-height: 0.95;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .book-cover-title span { color: var(--gold); display: block; }
+
+  .book-cover-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--grey);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  .book-cover-author {
+    position: absolute;
+    bottom: 20px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .book-badge-ozon {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 72px;
+    height: 72px;
+    background: #005bff;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    box-shadow: 0 4px 20px #005bff60;
+    line-height: 1.3;
+  }
+
+  .book-content { }
+
+  .book-content .section-label { margin-bottom: 12px; }
+
+  .book-content .section-title {
+    font-size: clamp(40px, 5vw, 68px);
+    margin-bottom: 16px;
+  }
+
+  .book-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--grey);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 520px;
+  }
+
+  .book-features {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 44px;
+  }
+
+  .book-feature {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 15px;
+    color: #c8c4bc;
+    line-height: 1.5;
+  }
+
+  .book-feature-icon {
+    color: var(--gold);
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .book-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .btn-ozon {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #005bff;
+    color: #fff;
+    border: none;
+    padding: 18px 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .btn-ozon:hover {
+    background: #0047cc;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px #005bff50;
+  }
+
+  .book-note {
+    font-size: 13px;
+    color: var(--grey);
+  }
+
+  .book-note strong { color: var(--white); }
+
+  @media (max-width: 900px) {
+    .book-section { padding: 70px 24px; }
+    .book-inner { grid-template-columns: 1fr; gap: 40px; }
+    .book-cover-wrap { display: flex; justify-content: center; }
+  }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 120px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, #c9a84c08 0%, transparent 70%);
+  }
+
+  .final-cta-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+  .final-cta .section-title { font-size: clamp(56px, 8vw, 100px); }
+
+  .final-cta p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--grey);
+    margin: 24px 0 52px;
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: var(--white);
+  }
+
+  .footer-brand span { color: var(--gold); }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: #444;
+  }
+
+  /* ── DIVIDER LINE ── */
+  .gold-line {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 24px 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes fadeRight {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    section { padding: 70px 24px; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 80px 24px 40px; }
+    .hero-right { padding: 0 24px 70px; justify-content: flex-start; }
+    .portrait-wrap { width: 100%; max-width: 320px; height: 400px; }
+    .stat-float:nth-child(2) { right: -10px; top: 20px; }
+    .stat-float:nth-child(3) { left: -10px; bottom: 60px; }
+
+    .about { grid-template-columns: 1fr; gap: 40px; }
+
+    .offer { padding: 70px 24px; }
+    .offer-grid { grid-template-columns: 1fr; }
+    .offer-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+
+    .who { padding: 70px 24px; }
+    .who-list { grid-template-columns: 1fr; }
+
+    .process { padding: 70px 24px; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .process-steps::before { display: none; }
+
+    .pricing-section { padding: 70px 24px; }
+    .pricing-card { padding: 48px 28px; }
+    .price-amount { font-size: 72px; }
+
+    .testimonials { padding: 70px 24px; }
+    .testi-grid { grid-template-columns: 1fr; }
+
+    .final-cta { padding: 80px 24px; }
+
+    footer { flex-direction: column; gap: 24px; text-align: center; padding: 40px 24px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-left">
+    <div class="badge">Лучший онлайн-тренер России 2024</div>
+
+    <h1 class="hero-title">
+      МАТВЕЙ<br>
+      <em>НОВИКОВ</em>
+      ФИТНЕС
+    </h1>
+
+    <p class="hero-subtitle">
+      25 лет в профессии. 113&nbsp;000 подписчиков.<br>
+      Один разговор — и ваш путь становится ясным.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#pricing" class="btn-primary">Записаться на консультацию</a>
+      <a href="#book" style="font-size:13px;color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;border-bottom:1px solid var(--gold);padding-bottom:2px;">📖 Моя книга</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="portrait-wrap">
+      <div class="portrait-inner">
+        <div class="portrait-placeholder">
+          <div class="portrait-initials">МН</div>
+        </div>
+        <div class="portrait-name-card">
+          <div class="name">MATVEY NOVIKOV</div>
+          <div class="title">Premium Fitness • Since 2000</div>
+        </div>
+      </div>
+      <div class="stat-float">
+        <div class="num">25+</div>
+        <div class="label">лет опыта</div>
+      </div>
+      <div class="stat-float">
+        <div class="num">113K</div>
+        <div class="label">подписчиков</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-divider"></div>
+</section>
+
+<!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
+<section class="about">
+  <div>
+    <div class="section-label">О тренере</div>
+    <h2 class="section-title">ПОЧЕМУ<br>ИМЕННО Я</h2>
+    <div class="gold-line"></div>
+    <p class="about-text reveal">
+      Я начал тренировать людей в <strong>2000 году</strong>. За это время я видел тысячи историй — побед, срывов, трансформаций. Я знаю, почему люди застревают. И я знаю, как их сдвинуть.<br><br>
+      Автор учебника. Преподаватель НГУ им.&nbsp;Лесгафта. Практикующий тренер в А-Фитнес. Это не просто биография — это <strong>гарантия глубины</strong>.
+    </p>
+  </div>
+
+  <div class="about-awards">
+    <div class="award-item reveal">
+      <div class="award-icon">🏆</div>
+      <div class="award-text">
+        <div class="t">Лучший онлайн-тренер России</div>
+        <div class="s">Russian Fitness Awards (RFA) 2024</div>
+      </div>
+    </div>
+    <div class="award-item reveal">
+      <div class="award-icon">📚</div>
+      <div class="award-text">
+        <div class="t">Автор учебника по фитнесу</div>
+        <div class="s">«Волшебство в сфере фитнес-услуг» + «Тренер без зала»</div>
+      </div>
+    </div>
+    <div class="award-item reveal">
+      <div class="award-icon">🎓</div>
+      <div class="award-text">
+        <div class="t">Преподаватель НГУ им. Лесгафта</div>
+        <div class="s">Методика онлайн-тренировок, факультет ЛФК</div>
+      </div>
+    </div>
+    <div class="award-item reveal">
+      <div class="award-icon">📱</div>
+      <div class="award-text">
+        <div class="t">113&nbsp;000 подписчиков</div>
+        <div class="s">@matveynovikov · Instagram & Telegram</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ OFFER ═══════════════════════════════ -->
+<div class="offer">
+  <div class="offer-header">
+    <div>
+      <div class="section-label">Что входит</div>
+      <h2 class="section-title">ЧТО ВЫ<br>ПОЛУЧИТЕ</h2>
+    </div>
+  </div>
+
+  <div class="offer-grid">
+    <div class="offer-card reveal">
+      <div class="offer-num">01</div>
+      <h3>Диагностика тела и образа жизни</h3>
+      <p>Разберём вашу историю, привычки, физические данные. Без шаблонов — только ваш случай.</p>
+    </div>
+    <div class="offer-card reveal">
+      <div class="offer-num">02</div>
+      <h3>Конкретный план действий</h3>
+      <p>Вы уйдёте с чёткой дорожной картой: что делать в ближайшие 4–8 недель и почему именно это.</p>
+    </div>
+    <div class="offer-card reveal">
+      <div class="offer-num">03</div>
+      <h3>Разбор питания и режима</h3>
+      <p>Не диета. Система. Та, что встраивается в вашу жизнь, а не требует героических усилий каждый день.</p>
+    </div>
+    <div class="offer-card reveal">
+      <div class="offer-num">04</div>
+      <h3>Ответы на все вопросы</h3>
+      <p>60 минут один на один. Спрашивайте всё, что копилось месяцами. Я отвечу честно и по делу.</p>
+    </div>
+    <div class="offer-card reveal">
+      <div class="offer-num">05</div>
+      <h3>Подбор нагрузки и инструментов</h3>
+      <p>Зал, дом, улица — не важно. Получите программу под вашу реальность, не под идеальные условия.</p>
+    </div>
+    <div class="offer-card reveal">
+      <div class="offer-num">06</div>
+      <h3>Запись и итоговые рекомендации</h3>
+      <p>После сессии — краткое резюме с ключевыми выводами, чтобы ничего не забылось.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WHO ═══════════════════════════════ -->
+<section class="who">
+  <div class="who-inner">
+    <div class="section-label">Целевая аудитория</div>
+    <h2 class="section-title">ДЛЯ КОГО<br>ЭТА КОНСУЛЬТАЦИЯ</h2>
+
+    <div class="who-list">
+      <div class="who-item reveal">
+        <div class="who-check">✓</div>
+        <p>Вам 35+ и вы чувствуете, что старые методы перестали работать</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-check">✓</div>
+        <p>Вы тренируетесь, но результата нет — хочется понять, почему</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-check">✓</div>
+        <p>Вы хотите начать, но не знаете откуда — и боитесь сделать неправильно</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-check">✓</div>
+        <p>У вас мало времени и нужна максимально эффективная система</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-check">✓</div>
+        <p>Вы устали от противоречивой информации и хотите получить чёткий ответ</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-check">✓</div>
+        <p>Вы готовы инвестировать в своё здоровье осознанно, а не покупать абонементы впустую</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PROCESS ═══════════════════════════════ -->
+<div class="process">
+  <div class="section-label">Как это работает</div>
+  <h2 class="section-title reveal">ЧЕТЫРЕ ШАГА<br>ДО РЕЗУЛЬТАТА</h2>
+
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h4>Оставьте заявку</h4>
+      <p>Нажмите кнопку и напишите мне в Telegram или Instagram</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <h4>Заполните анкету</h4>
+      <p>Короткая анкета — чтобы я пришёл подготовленным именно к вашему случаю</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <h4>Сессия 60 минут</h4>
+      <p>Онлайн или офлайн в СПб. Разбираем всё глубоко и без спешки</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <h4>Получаете план</h4>
+      <p>Уходите с ясностью, конкретными шагами и ответами на все вопросы</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ BOOK ═══════════════════════════════ -->
+<section class="book-section" id="book">
+  <div class="book-inner">
+
+    <div class="book-cover-wrap reveal">
+      <div class="book-cover">
+        <div class="book-cover-label">Матвей Новиков</div>
+        <div class="book-cover-title">ТРЕНЕР<span>БЕЗ</span>ЗАЛА</div>
+        <div class="book-cover-sub">Полное руководство по онлайн-тренировкам и фитнесу без ограничений</div>
+        <div class="book-cover-author">Матвей Новиков</div>
+      </div>
+      <div class="book-badge-ozon">Купить<br>на<br>OZON</div>
+    </div>
+
+    <div class="book-content reveal">
+      <div class="section-label">Книга</div>
+      <h2 class="section-title">ТРЕНЕР<br><em style="color:var(--gold);font-style:normal;">БЕЗ ЗАЛА</em></h2>
+      <div class="gold-line"></div>
+
+      <p class="book-desc">
+        25 лет опыта — в одной книге. Всё, что я знаю о тренировках, теле и системе — без воды, без шаблонов, без компромиссов.
+      </p>
+
+      <div class="book-features">
+        <div class="book-feature">
+          <span class="book-feature-icon">▸</span>
+          <span>Как тренироваться без зала и получать результат лучше, чем в тренажёрке</span>
+        </div>
+        <div class="book-feature">
+          <span class="book-feature-icon">▸</span>
+          <span>Система питания, которая работает — без диет и подсчёта калорий каждый день</span>
+        </div>
+        <div class="book-feature">
+          <span class="book-feature-icon">▸</span>
+          <span>Методика онлайн-тренировок от лучшего онлайн-тренера России 2024</span>
+        </div>
+        <div class="book-feature">
+          <span class="book-feature-icon">▸</span>
+          <span>Психология результата: почему люди бросают и как этого не допустить</span>
+        </div>
+        <div class="book-feature">
+          <span class="book-feature-icon">▸</span>
+          <span>120 страниц концентрированного практического опыта</span>
+        </div>
+      </div>
+
+      <div class="book-cta-row">
+        <a href="https://ozon.ru/t/d72RAMy" target="_blank" class="btn-ozon">
+          <span>📦</span>
+          Купить на Ozon
+        </a>
+        <div class="book-note">
+          Доставка по всей России<br>
+          <strong>Электронная и печатная версии</strong>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PRICING ═══════════════════════════════ -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner reveal">
+    <div class="section-label">Инвестиция</div>
+    <h2 class="section-title">СТОИМОСТЬ<br>КОНСУЛЬТАЦИИ</h2>
+
+    <div class="pricing-card">
+      <div class="price-display">
+        <span class="price-amount">15 000</span>
+        <span class="price-currency"> ₽</span>
+        <div class="price-note">одна сессия · 60 минут</div>
+      </div>
+
+      <ul class="pricing-includes">
+        <li>Персональная сессия 60 минут (онлайн или офлайн)</li>
+        <li>Анализ вашей ситуации до встречи</li>
+        <li>Индивидуальный план питания и тренировок</li>
+        <li>Ответы на все накопившиеся вопросы</li>
+        <li>Итоговое резюме сессии в письменном виде</li>
+        <li>25 лет опыта и лучший онлайн-тренер России 2024</li>
+      </ul>
+
+      <a href="https://t.me/matveynovikov" target="_blank" class="btn-gold">
+        Записаться на консультацию
+      </a>
+
+      <div class="guarantee">
+        <span>💬</span>
+        <span>Пишите в Telegram: @matveynovikov</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ TESTIMONIALS ═══════════════════════════════ -->
+<div class="testimonials">
+  <div class="section-label">Отзывы</div>
+  <h2 class="section-title reveal">ЧТО ГОВОРЯТ<br>КЛИЕНТЫ</h2>
+
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <p class="testi-text">Матвей — это редкий случай, когда тренер думает вместе с тобой, а не за тебя. После одной консультации у меня впервые появилось понимание, что именно я делаю не так. И главное — как это исправить.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">ЕК</div>
+        <div class="testi-info">
+          <div class="name">Екатерина К.</div>
+          <div class="meta">Клиент, 42 года · Москва</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal">
+      <p class="testi-text">Я тренировался 3 года и топтался на месте. Час с Матвеем перевернул всё с ног на голову. Он разобрал мою программу буквально по косточкам. Уже через месяц я вышел на новый уровень.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">АМ</div>
+        <div class="testi-info">
+          <div class="name">Андрей М.</div>
+          <div class="meta">Клиент, 38 лет · Санкт-Петербург</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal">
+      <p class="testi-text">Думала, что консультация — это общие слова. Оказалось — конкретика и точность. Матвей дал мне систему, которая вписалась в мой ритм жизни. Больше не чувствую себя потерянной.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">ОС</div>
+        <div class="testi-info">
+          <div class="name">Ольга С.</div>
+          <div class="meta">Клиент, 46 лет · Санкт-Петербург</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ FINAL CTA ═══════════════════════════════ -->
+<section class="final-cta">
+  <div class="final-cta-content">
+    <div class="section-label">Следующий шаг</div>
+    <h2 class="section-title reveal">ОДИН ЧАС.<br><em style="color:var(--gold);font-style:normal;">НОВЫЙ ПУТЬ.</em></h2>
+    <p class="reveal">
+      Перестаньте угадывать. Перестаньте терять время на то, что не работает. Один разговор с человеком, который знает — и всё становится проще.
+    </p>
+    <a href="https://t.me/matveynovikov" target="_blank" class="btn-gold" style="width:auto;display:inline-block;padding:20px 60px;" class="reveal">
+      Записаться прямо сейчас
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer>
+  <div class="footer-brand">МАТВЕЙ <span>НОВИКОВ</span></div>
+  <div class="footer-links">
+    <a href="https://instagram.com/matveynovikov" target="_blank">Instagram</a>
+    <a href="https://t.me/matveynovikov" target="_blank">Telegram</a>
+    <a href="#book">Книга</a>
+    <a href="#pricing">Консультация</a>
+  </div>
+  <div class="footer-copy">© 2024 Матвей Новиков</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
